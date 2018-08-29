@@ -1,35 +1,45 @@
 #include <iostream>
 using namespace std;
 
-void quickSort(int Arr[],int first,int last){
-    int i, j, pivot, temp;
+int leftArr[50],rightArr[50];
+int l = 0,r = 0;
 
-    if(first < last){
-        pivot = first;
-        i = first;
-        j = last;
+void quickSort(int Arr[],int pivot,int right) {
 
-        while(i < j){
+    for (int i = 1; i < right; ++i) {
 
-            while(Arr[i] <= Arr[pivot] && i<last)
-                i++;
+        if (Arr[pivot] <= Arr[i])
+            rightArr[r++] = Arr[i];
 
-            while(Arr[j]>Arr[pivot])
-                j--;
+        else
+            leftArr[l++] = Arr[i];
 
-            if( i < j){
-                temp = Arr[i];
-                Arr[i] = Arr[j];
-                Arr[j] = temp;
+    }
+    leftArr[l] = Arr[pivot];
+}
+
+
+void printArr(int Arr1[],int n){
+
+   int  temp = 0;
+
+    for (int i = 0; i < n ; ++i) {
+        for (int j = 0; j < n - i -1 ; ++j) {
+
+            if(Arr1[j] > Arr1[j+1]){
+
+                temp = Arr1[j];
+                Arr1[j] = Arr1[j+1];
+                Arr1[j+1] = temp;
             }
+
         }
 
-        temp = Arr[pivot];
-        Arr[pivot] = Arr[j];
-        Arr[j] = temp;
-        quickSort(Arr,first,j-1);
-        quickSort(Arr,j+1,last);
+    }
 
+    for (int k = 0; k < n; ++k) {
+
+        cout<<Arr1[k]<<" ";
     }
 }
 
@@ -41,21 +51,24 @@ int main(){
 
 
     cout<<"Enter your data (-1) for end "<<endl;
-    
-   while(cin>>data) {
-       
-       if(data == -1)
-           break;
 
-       else
-           Arr[i++] = data;
-   }
-    quickSort(Arr,0,i-1);
+    while(cin>>data) {
 
-    printf("Order of Sorted elements: ");
+        if(data == -1)
+            break;
 
-    for(int j = 0 ; j < i ; j++)
-        cout<<Arr[j]<<" ";
+        else
+            Arr[i++] = data;
+    }
+
+    quickSort(Arr,0,i);
+
+    printf("Sorted elements: ");
+
+    printArr(leftArr,l+1);
+    printArr(rightArr,r);
+
+
 
     return 0;
 }
